@@ -1,18 +1,9 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
     <title>Calendar</title>
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            border: 1px solid black;
-            padding: 8px;
-            text-align: center;
-        }
-    </style>
+    <link rel="stylesheet" href="{% static 'calendar_app/css/styles.css' %}">
 </head>
 <body>
     <h1>Task Calendar</h1>

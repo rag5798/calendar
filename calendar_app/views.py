@@ -8,15 +8,14 @@ from datetime import date, timedelta
 
 @login_required
 def calendar_view(request):
-    # Get today's date
     today = date.today()
-    start_of_week = today - timedelta(days=today.weekday())  # Monday
-    end_of_week = start_of_week + timedelta(days=6)  # Sunday
+    start_of_week = today - timedelta(days=today.weekday())
+    end_of_week = start_of_week + timedelta(days=6)
 
-    # Query tasks within the current week and order by task_date and task_time
+
     tasks = Task.objects.filter(task_date__range=[start_of_week, end_of_week]).order_by('task_date', 'task_time')
 
-    # Initialize a dictionary to hold tasks grouped by day of the week
+    
     tasks_by_day = {
         'Monday': [],
         'Tuesday': [],
@@ -27,17 +26,17 @@ def calendar_view(request):
         'Sunday': []
     }
 
-    # Group tasks by day of the week
+    
     for task in tasks:
-        day_of_week = task.task_date.strftime('%A')  # Get day name (e.g., Monday)
+        day_of_week = task.task_date.strftime('%A')
         tasks_by_day[day_of_week].append(task)
 
-    # Pass the grouped data to the template
+    
     context = {
         'tasks_by_day': tasks_by_day,
         'current_month': today.strftime('%B'),
         'current_year': today.year,
-        'day_dates': {  # This will show the dates for the current week
+        'day_dates': {
             'Monday': (start_of_week + timedelta(days=0)).strftime('%Y-%m-%d'),
             'Tuesday': (start_of_week + timedelta(days=1)).strftime('%Y-%m-%d'),
             'Wednesday': (start_of_week + timedelta(days=2)).strftime('%Y-%m-%d'),
