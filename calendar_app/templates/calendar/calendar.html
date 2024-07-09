@@ -1,0 +1,52 @@
+<!-- tasks/templates/tasks/calendar.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calendar</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Task Calendar</h1>
+    <a href="{% url 'add_task' %}">Add Task</a>
+    <div>
+        <h2>{% now "F Y" %}</h2>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+                <th>Saturday</th>
+                <th>Sunday</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                {% for day_name, day_tasks in tasks_by_day.items %}
+                    <td>
+                        <ul>
+                            {% for task in day_tasks %}
+                                <li>{{ task.task_date }} - {{ task.task_name }}{% if task.completed %} (Completed){% endif %}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                {% endfor %}
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
